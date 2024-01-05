@@ -1,0 +1,122 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter Authentication</title>
+    <style>
+        body {
+            background-color: #282727;
+            color: #000;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #authentication-box {
+            width: 300px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #000;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px 0;
+            width: calc(100% - 16px);
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="authentication-box">
+        <h1>Voter Authentication</h1>
+        <form id="authentication-form" novalidate>
+            <label for="aadharId">Aadhar ID:</label>
+            <input type="number" id="aadharId" required oninvalid="this.setCustomValidity('Please enter Aadhar ID')">
+            <br>
+            <label for="voterId">Voter ID:</label>
+            <input type="number" id="voterId" required oninvalid="this.setCustomValidity('Please enter Voter ID')">
+            <br>
+            <button type="button" onclick="authenticate()">Login</button>
+        </form>
+    </div>
+
+    <script>
+
+
+
+        async function authenticate() {
+            const aadharId = document.getElementById('aadharId').value;
+            const voterId = document.getElementById('voterId').value;
+
+            const form = document.getElementById('authentication-form');
+
+            // Reset custom validation messages
+            document.getElementById('aadharId').setCustomValidity('');
+            document.getElementById('voterId').setCustomValidity('');
+
+            // Check if the form is valid
+            if (form.checkValidity()) {
+                try {
+                    const response = await fetch('http://localhost:3000/authenticate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ aadhar_id: parseInt(aadharId), voter_id: parseInt(voterId) }),
+                    });
+
+                    const result = await response.json();
+
+                    if (result.authenticated) {
+                        console.log('Authentication successful: Yes');
+                        document.getElementById('aadharId').value = '';
+                        document.getElementById('voterId').value = '';
+
+
+                        window.open('face_recognition.html',)
+
+                    } else {
+                        console.log('Authentication successful: No');
+                    }
+                } catch (error) {
+                    console.error('Error during authentication:', error);
+                }
+            } else {
+                // If the form is not valid, set custom validation messages
+                document.getElementById('aadharId').reportValidity();
+                document.getElementById('voterId').reportValidity();
+            }
+        }
+    </script>
+</body>
+
+</html>

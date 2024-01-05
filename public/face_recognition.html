@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Spoofing Face Recognition</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="webcam-container">
+        <div id="camera-feed">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas"></canvas>
+        </div>
+        <div id="voting-machine" style="display: none;">
+            <h2>Voting Machine</h2>
+            <form id="voting-form">
+                <label for="party">Choose a party:</label>
+                <select id="party" name="party">
+                    <option value="party1">Party 1</option>
+                    <option value="party2">Party 2</option>
+                    <option value="party3">Party 3</option>
+                    <!-- Add more options as needed -->
+                </select>
+                <br>
+                <button type="button" onclick="submitVote()">Submit Vote</button>
+            </form>
+        </div>
+    </div>
+    <div id="result-container">
+        <p id="result-message">Face not recognized</p>
+    </div>
+
+
+    <script src="face-api.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

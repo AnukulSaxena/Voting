@@ -1,0 +1,62 @@
+/* styles.css */
+body {
+    background-color: #fff;
+    color: #000;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+#webcam-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#camera-feed,
+#voting-machine {
+    flex: 1;
+    padding: 10px;
+}
+
+#voting-machine {
+    display: none;
+}
+
+h2 {
+    color: #000;
+}
+
+#voting-form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+select {
+    padding: 8px;
+    width: 100%;
+}
+
+button {
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+#result-container {
+    margin-top: 20px;
+}
+
+#result-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
