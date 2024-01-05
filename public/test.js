@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
+const { boolean } = require('webidl-conversions');
 
 // Define Mongoose Schema
 const voterSchema = new mongoose.Schema({
     voter_id: { type: Number, required: true, unique: true },
     aadhar_id: { type: Number, required: true, unique: true },
     image_url: { type: String, required: true, unique: true },
+    is_voted: { type: Boolean, required: true },
 });
 
 // Create Mongoose Model
@@ -24,6 +26,7 @@ db.once('open', () => {
         voter_id: 1234,
         aadhar_id: 4321,
         image_url: 'https://res.cloudinary.com/dzv8lzuw2/image/upload/v1704454460/jyaeuzp8hlajbcljp8wh.jpg',
+        is_voted: false
     });
 
     // Save the document to the database

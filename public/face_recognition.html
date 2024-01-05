@@ -5,7 +5,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anti-Spoofing Face Recognition</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* styles.css */
+        body {
+            background-color: #282727;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #webcam-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #camera-feed,
+        #voting-machine {
+            flex: 1;
+            padding: 10px;
+        }
+
+        #voting-machine {
+            display: none;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            height: 440px;
+            margin-top: 10px;
+            margin-right: 30px;
+        }
+
+        video {
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #000;
+        }
+
+        #voting-form {
+            margin-top: 100px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        select {
+            padding: 8px;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #result-container {
+            margin-top: 20px;
+        }
+
+        #result-message {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,22 +88,25 @@
             <canvas id="canvas"></canvas>
         </div>
         <div id="voting-machine" style="display: none;">
-            <h2>Voting Machine</h2>
-            <form id="voting-form">
-                <label for="party">Choose a party:</label>
-                <select id="party" name="party">
-                    <option value="party1">Party 1</option>
-                    <option value="party2">Party 2</option>
-                    <option value="party3">Party 3</option>
-                    <!-- Add more options as needed -->
-                </select>
-                <br>
-                <button type="button" onclick="submitVote()">Submit Vote</button>
-            </form>
+            <div style="background-color: #fff; padding: 10px; border-radius: 8px;">
+                <h2>Voting Machine</h2>
+                <form id="voting-form">
+                    <label for="party">Choose a party:</label>
+                    <select id="party" name="party">
+                        <option value="party1">BJP</option>
+                        <option value="party2">CNG</option>
+                        <option value="party3">AAP</option>
+                        <option value="party4">RJD</option>
+                        <option value="party5">JDU</option>
+                    </select>
+                    <br>
+                    <button type="button" onclick="submitVote()">Submit Vote</button>
+                </form>
+            </div>
         </div>
     </div>
     <div id="result-container">
-        <p id="result-message">Face not recognized</p>
+        <p id="result-message">Wait for a bit.</p>
     </div>
 
 

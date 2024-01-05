@@ -16,6 +16,7 @@ const voterSchema = new mongoose.Schema({
     voter_id: { type: Number, required: true, unique: true },
     aadhar_id: { type: Number, required: true, unique: true },
     image_url: { type: String, required: true, unique: true },
+    is_voted: { type: Boolean, required: true },
 });
 
 const Voter = mongoose.model('Voter', voterSchema);
@@ -31,10 +32,9 @@ app.post('/authenticate', async (req, res) => {
     try {
 
         const result = await Voter.findOne({ aadhar_id, voter_id });
-        console.log(result)
 
 
-        if (result) {
+        if (result && !result.is_voted) {
             console.log('Authentication successful: Yes');
             voter_image = result.image_url
             res.json({ authenticated: true });
@@ -68,20 +68,32 @@ const voteSchema = new mongoose.Schema({
 const Vote = mongoose.model('Vote', voteSchema);
 
 
+
+
 app.post('/submit-vote', async (req, res) => {
     try {
         const { party } = req.body;
 
+
         const newVote = new Vote({ party });
         await newVote.save();
-        voter_image = ''
 
-        res.status(200).json({ message: 'Vote submitted successfully.' });
+
+        if (voter_image) {
+            await Voter.updateOne({ image_url: voter_image }, { $set: { is_voted: true } });
+            voter_image = '';
+            res.status(200).json({ message: 'Vote submitted successfully.' });
+        } else {
+            res.status(500).json({ error: 'No associated voter found.' });
+        }
     } catch (error) {
         console.error('Error submitting vote:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+
+
 
 
 app.get('/', (req, res) => {
