@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '.env' })
 const express = require('express');
 const path = require('path');
 const cors = require('cors')
@@ -20,8 +21,6 @@ const voterSchema = new mongoose.Schema({
 });
 
 const Voter = mongoose.model('Voter', voterSchema);
-
-mongoose.connect('mongodb://localhost:27017/voterDB');
 
 app.post('/authenticate', async (req, res) => {
 
