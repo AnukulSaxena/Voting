@@ -36,3 +36,10 @@ npm install
 - ```bash
   node public/test.js
   ```
+
+### 6. run the server
+
+- ```bash
+    node server.js
+  ```
+- click on `http://localhost:3000

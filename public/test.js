@@ -13,9 +13,7 @@ const voterSchema = new mongoose.Schema({
 const Voter = mongoose.model("Voter", voterSchema);
 
 // Connect to MongoDB
-mongoose.connect(
-  "mongodb+srv://copopoco71:algore269@mymovies.gbncia4.mongodb.net/voterDB"
-);
+mongoose.connect(process.env.MONGODB_URI);
 
 // Check for successful connection
 const db = mongoose.connection;

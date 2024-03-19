@@ -112,7 +112,7 @@ async function startWebcam() {
           );
 
           // Adjust the threshold based on your requirements
-          const threshold = 0.4;
+          const threshold = 0.45;
           console.log(distance);
 
           if (distance < threshold) {

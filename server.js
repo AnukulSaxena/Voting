@@ -23,9 +23,7 @@ const voterSchema = new mongoose.Schema({
 const Voter = mongoose.model("Voter", voterSchema);
 
 app.post("/authenticate", async (req, res) => {
-  mongoose.connect(
-    "mongodb+srv://copopoco71:<password>@mymovies.gbncia4.mongodb.net/voterDB"
-  );
+  mongoose.connect(process.env.MONGODB_URI);
 
   const { aadhar_id, voter_id } = req.body;
 
