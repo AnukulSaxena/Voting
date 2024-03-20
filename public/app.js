@@ -1,32 +1,5 @@
 const video = document.getElementById("video");
-const canvas = document.getElementById("canvas");
 const resultMessage = document.getElementById("result-message");
-const votingMachine = document.getElementById("voting-machine");
-
-function submitVote() {
-  const selectedParty = document.getElementById("party").value;
-
-  // Send the vote to the server
-  fetch("http://localhost:3000/submit-vote", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ party: selectedParty }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data.message); // Log the server response
-      // Optionally, you can provide feedback to the user on the client side
-      alert("Vote submitted successfully.");
-      window.close();
-    })
-    .catch((error) => {
-      console.error("Error submitting vote:", error);
-      // Optionally, provide feedback to the user on the client side
-      alert("Error submitting vote. Please try again.");
-    });
-}
 
 async function fetchKnownImage() {
   try {
@@ -53,13 +26,6 @@ async function startWebcam() {
     await new Promise((resolve) => {
       video.addEventListener("play", resolve, { once: true });
     });
-
-    // Set the canvas dimensions based on the video
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    const displaySize = { width: video.videoWidth, height: video.videoHeight };
-    faceapi.matchDimensions(canvas, displaySize);
 
     // Load face-api.js models individually
     await loadModel("tinyFaceDetector", "/models");
@@ -94,12 +60,8 @@ async function startWebcam() {
         .withFaceDescriptors()
         .withFaceExpressions();
 
-      const resizedDetections = faceapi.resizeResults(detections, displaySize);
-      canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-
-      if (resizedDetections.length > 0) {
-        const userFaceDescriptor = resizedDetections[0].descriptor;
-        const userFaceLandmarks = resizedDetections[0].landmarks.positions;
+      if (detections.length > 0) {
+        const userFaceDescriptor = detections[0].descriptor;
 
         // Check if the face is likely to be live based on facial landmarks
         const isLive = true;
@@ -112,13 +74,13 @@ async function startWebcam() {
           );
 
           // Adjust the threshold based on your requirements
-          const threshold = 0.45;
+          const threshold = 0.5;
           console.log(distance);
 
           if (distance < threshold) {
             resultMessage.textContent = "Face matched!";
             resultMessage.style.color = "green";
-            votingMachine.style.display = "block";
+            // window.open("voting-machine.html", "_self");
           } else {
             resultMessage.textContent = "Face not recognized";
             resultMessage.style.color = "red";
